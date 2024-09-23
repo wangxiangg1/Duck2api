@@ -11,16 +11,15 @@ func ConvertAPIRequest(api_request officialtypes.APIRequest) duckgotypes.ApiRequ
 	duckgo_request := duckgotypes.NewApiRequest(inputModel)
 	realModel := inputModel
 
-	// 模型映射，简化用户输入模型，例如 gpt-3.5 --> gpt-3.5-turbo-0125
 	// 如果模型未进行映射，则直接使用输入模型，方便后续用户使用 duckduckgo 添加的新模型。
 	modelLower := strings.ToLower(inputModel)
 	switch {
 	case strings.HasPrefix(modelLower, "gpt-3.5"):
-		realModel = "gpt-3.5-turbo-0125"
+		realModel = "gpt-4o-mini"
 	case strings.HasPrefix(modelLower, "claude-3-haiku"):
 		realModel = "claude-3-haiku-20240307"
-	case strings.HasPrefix(modelLower, "llama-3-70b"):
-		realModel = "meta-llama/Llama-3-70b-chat-hf"
+	case strings.HasPrefix(modelLower, "llama-3.1-70b"):
+		realModel = "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
 	case strings.HasPrefix(modelLower, "mixtral-8x7b"):
 		realModel = "mistralai/Mixtral-8x7B-Instruct-v0.1"
 	}
@@ -37,6 +36,9 @@ func buildContent(api_request *officialtypes.APIRequest) string {
 	for _, apiMessage := range api_request.Messages {
 		role := apiMessage.Role
 		if role == "user" || role == "system" || role == "assistant" {
+			if role == "system" {
+				role = "user"
+			}
 			contentStr := ""
 			// 判断 apiMessage.Content 是否为数组
 			if arrayContent, ok := apiMessage.Content.([]interface{}); ok {
