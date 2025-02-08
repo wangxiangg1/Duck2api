@@ -100,6 +100,7 @@ func (h *Handler) engines(c *gin.Context) {
 		"claude-3-haiku-20240307",
 		"meta-llama/Llama-3-70b-chat-hf",
 		"mistralai/Mixtral-8x7B-Instruct-v0.1",
+		"o3-mini",
 	}
 
 	for _, modelID := range modelIDs {

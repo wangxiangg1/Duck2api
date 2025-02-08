@@ -22,6 +22,8 @@ func ConvertAPIRequest(api_request officialtypes.APIRequest) duckgotypes.ApiRequ
 		realModel = "meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
 	case strings.HasPrefix(modelLower, "mixtral-8x7b"):
 		realModel = "mistralai/Mixtral-8x7B-Instruct-v0.1"
+	case strings.HasPrefix(modelLower, "o3-mini"):
+		realModel = "o3-mini"
 	}
 
 	duckgo_request.Model = realModel
